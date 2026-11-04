@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Assignment_3
+namespace MohawkGame2D
 {
     public class Fish
     { 
+
+        
     }
 }
