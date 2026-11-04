@@ -46,7 +46,10 @@ namespace MohawkGame2D
             if (key == 'd' || key == 'D')
             {
                 x += speed * Time.DeltaTime;
+
+
             }
+
 
             // Snap back from right edge
             if (x > 650)
