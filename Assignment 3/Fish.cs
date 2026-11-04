@@ -7,28 +7,78 @@ namespace MohawkGame2D
 {
     public class Fish
     {
-        public Fish()
-        {
-        }
+        float x = 200.0f;
+        float y = 200.0f;
+
+        Color fishColor = Color.Red;
+
+        float speed = 450.0f;
+
+        Vector2 direction = new Vector2(0, 0);
 
         public void setup()
         {
+            fishColor = MohawkGame2D.Random.Color();
+            speed = MohawkGame2D.Random.Float(400, 500);
+
+            x = MohawkGame2D.Random.Float(50, 500);
+            y = MohawkGame2D.Random.Float(50, 500);
         }
-    
 
         public void update()
-        { 
+        {
+            // Get keyboard input
+            char key = Input.GetCharsPressed();
 
+            // W - Move Up
+            if (key == 'w' || key == 'W')
+            {
+                y -= speed * Time.DeltaTime;
+            }
+
+            // A - Move Left
+            if (key == 'a' || key == 'A')
+            {
+                x -= speed * Time.DeltaTime;
+            }
+
+            // D - Move Right
+            if (key == 'd' || key == 'D')
+            {
+                x += speed * Time.DeltaTime;
+            }
+
+            // Snap back from right edge
+            if (x > 650)
+            {
+                x = -50;
+                fishColor = MohawkGame2D.Random.Color();
+                speed = MohawkGame2D.Random.Float(400, 500);
+                y = MohawkGame2D.Random.Float(50, 500);
+            }
+
+            // Snap back from left edge
+            if (x < -85)
+            {
+                x = 650;
+                fishColor = MohawkGame2D.Random.Color();
+                speed = MohawkGame2D.Random.Float(400, 500);
+                y = MohawkGame2D.Random.Float(50, 500);
+            }
+
+            // Draw Fish
+            DrawFish();
         }
-        void DrawFish(float x, float y, Color fishColor)
+
+        void DrawFish()
         {
             int height = 30;
 
-            // offset to center the origin
+            // Offset to center the origin
             Vector2 offset = new Vector2(-30, -height);
 
-            // draw the tail of the fish
-
+            // Draw the tail
+            Draw.FillColor = fishColor;
 
             Draw.Triangle(
                 new Vector2(x - 35, y),
@@ -36,21 +86,21 @@ namespace MohawkGame2D
                 new Vector2(x - 85, y + 35)
             );
 
-            // draw the top fin
+            // Draw the top fin
             Draw.Triangle(
                 new Vector2(x - 20, y - 15),
                 new Vector2(x, y - 65),
                 new Vector2(x + 25, y - 15)
             );
 
-            // draw the bottom fin
+            // Draw the bottom fin
             Draw.Triangle(
                 new Vector2(x - 10, y + 15),
                 new Vector2(x + 10, y + 55),
                 new Vector2(x + 30, y + 15)
             );
 
-            // draw the body of the fish
+            // Draw the body
             Draw.LineSize = 0;
             Draw.FillColor = fishColor;
 
@@ -66,15 +116,16 @@ namespace MohawkGame2D
             Vector2 bottomRectSize = new Vector2(60, height);
             Draw.Rectangle(bottomRectPosition, bottomRectSize);
 
-            // round out the fish body
+            // Round out the fish body
             Draw.Circle(new Vector2(x - 30, y), 30);
             Draw.Circle(new Vector2(x + 30, y), 30);
+
             Draw.Rectangle(
                 new Vector2(x - 30, y - 30),
                 new Vector2(60, 60)
             );
 
-            // draw the white belly
+            // Draw the white belly
             Draw.FillColor = Color.White;
 
             Draw.Rectangle(
@@ -82,7 +133,7 @@ namespace MohawkGame2D
                 new Vector2(55, 10)
             );
 
-            // draw the side fin
+            // Draw the side fin
             Draw.FillColor = fishColor;
 
             Draw.Triangle(
@@ -91,7 +142,7 @@ namespace MohawkGame2D
                 new Vector2(x + 20, y + 10)
             );
 
-            // draw the fish eye
+            // Draw the fish eye
             float eyeRadius = 8f;
             float eyeOffset = 35f;
             float heightOffset = 10f;
@@ -104,12 +155,13 @@ namespace MohawkGame2D
 
             Draw.Circle(eyeCirclePos, eyeRadius);
 
-            // draw the pupl of eye
+            // Draw the pupil
             Draw.FillColor = Color.Black;
             Draw.Circle(eyeCirclePos, 4f);
 
-            // draw the mouth
+            // Draw the mouth
             Draw.FillColor = Color.Black;
+
             Draw.Rectangle(
                 new Vector2(x + 48, y + 10),
                 new Vector2(10, 3)
@@ -117,6 +169,4 @@ namespace MohawkGame2D
         }
     }
 }
-
-
 
